@@ -4,19 +4,28 @@ class CrearOrdenes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Crear nueva Orden de trabajo')),
+      appBar: AppBar(title: const Text('Crear nueva Orden de trabajo')),
       body: SingleChildScrollView(
         child: Form(
+            //Widget de formulario
             child: Column(
           children: <Widget>[
             _nombreActividad(),
             _nombreColaborador(),
             _nombreProyecto(),
-            SizedBox(
-              height: 25,
+            const SizedBox(height: 30), //Separador
+            const Text(
+              'Ingresar fechas de actividad',
+              style: TextStyle(fontSize: 20),
             ),
             _fechaInicio(),
             _fechaTermino(),
+            const SizedBox(height: 25), //Separador
+            const Text(
+              'Ingresar Descripción',
+              style: TextStyle(fontSize: 20),
+            ),
+            _descripcion(),
 
             //Botón de enviar
 
@@ -25,7 +34,7 @@ class CrearOrdenes extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.teal[600],
               ),
-              child: Text('Enviar',
+              child: const Text('Enviar',
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold)),
             )
@@ -38,9 +47,15 @@ class CrearOrdenes extends StatelessWidget {
   Widget _nombreActividad() {
     //Widget de input para nombre la actividad
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: TextFormField(
-        decoration: InputDecoration(
+        validator: (value) {
+          if (value!.isEmpty) {
+            //TIENE NULL CHECK
+            return "Este Campo es Obligatorio";
+          }
+        },
+        decoration: const InputDecoration(
             labelText: 'Nombre de la Actividad',
             hintText: 'Ej: Creación Mockups'),
       ),
@@ -52,9 +67,9 @@ class CrearOrdenes extends StatelessWidget {
     //Input para crear un colaborador
     //Widget de input para texto
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: TextFormField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             labelText: 'Nombre del colaborador',
             hintText: 'Ingrese nombre completo'),
       ),
@@ -66,9 +81,9 @@ class CrearOrdenes extends StatelessWidget {
     //Input para crear un colaborador
     //Widget de input para texto
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: TextFormField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             labelText: 'Nombre del proyecto', hintText: 'Ej: Creación App'),
       ),
     );
@@ -78,10 +93,12 @@ class CrearOrdenes extends StatelessWidget {
     //Widget de input para nombre de colaboradores
     //Input para crear un colaborador
     //Widget de input para texto
+    TextEditingController dateCtl = TextEditingController();
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: TextFormField(
-        decoration: InputDecoration(
+        keyboardType: TextInputType.datetime,
+        decoration: const InputDecoration(
             labelText: 'Fecha de Inicio Actividad',
             hintText: 'Ingrese la fecha de inicio'),
       ),
@@ -93,11 +110,25 @@ class CrearOrdenes extends StatelessWidget {
     //Input para crear un colaborador
     //Widget de input para texto
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: TextFormField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             labelText: 'Fecha de Termino Actividad',
             hintText: 'Ingrese la fecha de termino'),
+      ),
+    );
+  }
+
+  Widget _descripcion() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: TextFormField(
+        maxLines: 9,
+        minLines: 3,
+        decoration: const InputDecoration(
+          hintText: 'Agregue una breve descripción',
+          border: OutlineInputBorder(borderSide: BorderSide()),
+        ),
       ),
     );
   }
